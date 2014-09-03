@@ -46,6 +46,9 @@ class OneAllUserIdentity(models.Model):
                     print eval('self.%s' % value)
                 except Exception as e:
                     print e
+        # django.contrib.auth.models.User#username(max_length=30)
+        name = user.first_name + user.last_name
+        user.username = name.replace(' ', '')[:29]
         user.save()
         if not self.user:
             self.user = user
