@@ -50,7 +50,7 @@ class OneAllUserIdentity(models.Model):
                 except Exception as e:
                     print e
 
-        user.username = self.generate_uuid(user.username)
+        user.username = self.generate_uuid()
         user.save()
         if not self.user:
             self.user = user
