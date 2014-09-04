@@ -1,6 +1,8 @@
+import hashlib
 from django.db import models
 from django.conf import settings
 from pyoneall.base import OADict
+
 
 user_model = getattr(settings, 'AUTH_USER_MODEL', 'auth.User').split('.')
 User = models.loading.get_model('.'.join(user_model[:-1]), user_model[-1])
@@ -46,9 +48,8 @@ class OneAllUserIdentity(models.Model):
                     print eval('self.%s' % value)
                 except Exception as e:
                     print e
-        # django.contrib.auth.models.User#username(max_length=30)
-        name = user.first_name + user.last_name
-        user.username = name.replace(' ', '')[:29]
+        md5 = hashlib.md5.update(user.username)
+        user.username = md5.digest()
         user.save()
         if not self.user:
             self.user = user
