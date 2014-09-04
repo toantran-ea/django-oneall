@@ -25,7 +25,7 @@ class OneAllAuthBackend(object):
         try:
             identity = OneAllUserIdentity.objects.get(user_token=oa_user.user_token)
         except OneAllUserIdentity.DoesNotExist:
-            identity, created = OneAllUserIdentity(
+            identity = OneAllUserIdentity(
                 user_token=oa_user.user_token,
                 raw=unicode(oa_user.identity)
             )
