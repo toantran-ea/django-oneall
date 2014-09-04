@@ -48,7 +48,8 @@ class OneAllUserIdentity(models.Model):
                     print eval('self.%s' % value)
                 except Exception as e:
                     print e
-        md5 = hashlib.md5.update(user.username)
+        md5 = hashlib.md5()
+        md5.update(user.username)
         user.username = md5.digest()
         user.save()
         if not self.user:
