@@ -1,4 +1,5 @@
-import hashlib
+import random
+import string
 from django.db import models
 from django.conf import settings
 from pyoneall.base import OADict
@@ -48,13 +49,16 @@ class OneAllUserIdentity(models.Model):
                     print eval('self.%s' % value)
                 except Exception as e:
                     print e
-        md5 = hashlib.md5()
-        md5.update(user.username)
-        user.username = md5.digest()
+
+        user.username = self.generate_uuid(user.username)
         user.save()
         if not self.user:
             self.user = user
             self.save()
+
+    def generate_uuid(self):
+        choice = string.ascii_lowercase + string.digits + '-'
+        return ''.join(random.choice(choice) for i in range(16))
 
     class Meta:
         db_table = getattr(settings, 'ONEALL_CACHE_TABLE', 'oneall_cache')

@@ -3,6 +3,7 @@ from models import User
 from django.conf import settings
 from django.db.models import get_model
 
+
 OneAllUserIdentity = get_model('django_oneall', 'OneAllUserIdentity')
 
 # The worker to be used for authentication
@@ -50,3 +51,4 @@ class OneAllAuthBackend(object):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
+
